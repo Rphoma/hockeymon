@@ -7,7 +7,7 @@ from PIL import Image
 import seaborn as sns
 import scipy
 
-st.write("You may need to reload your player once or twice, but I promise the right Pokémon and stats will show up!")
+st.write("You may need to reload your player a few times, but I promise the right Pokémon image and stats will show up!")
 
 pl_white = '#FEFEFE'
 pl_background = '#162B50'
