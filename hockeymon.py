@@ -9,6 +9,9 @@ import scipy
 
 st.write("You may need to reload your player a few times, but I promise the right Pokémon image and stats will show up!")
 
+generations = ['Gen1','Gen2']
+poke_gen = st.radio('Choose a generation of Pokémon:', generations)
+
 pl_white = '#FEFEFE'
 pl_background = '#162B50'
 pl_text = '#72a3f7'
@@ -34,20 +37,31 @@ color_scheme = ['#FF5959',
                '#F5AC78',
                '#FAE078',
                 '#8EC7BC',
-               '#FA92B2']
+               '#FA92B2'] if poke_gen=='Gen1' else ['#FF5959',
+                                                    '#F5AC78',
+                                                    '#FAE078',
+                                                    '#9DB7F5',
+                                                    '#A7DB8D',
+                                                    '#FA92B2']
+
+gen_map = {
+    'Gen1':'https://docs.google.com/spreadsheets/d/1pB-ZW1QXPWu8Mdg84WWBanLbl1P95lKWOcQMumhrh0E/export?format=csv&gid=1502323586',
+    'Gen2':'https://docs.google.com/spreadsheets/d/1pB-ZW1QXPWu8Mdg84WWBanLbl1P95lKWOcQMumhrh0E/export?format=csv&gid=562450906'
+}
+
 @st.cache_data
-def load_data():
-    return pd.read_csv('https://docs.google.com/spreadsheets/d/1pB-ZW1QXPWu8Mdg84WWBanLbl1P95lKWOcQMumhrh0E/export?format=csv&gid=1502323586')
-sim_frame = load_data()
+def load_data(gen):
+    return pd.read_csv(gen_map[gen])
+sim_frame = load_data(poke_gen)
 
 # Player
 players = list(sim_frame['Player'].unique())
 default_ix = players.index('Jason Robertson')
-player = st.selectbox('Selct a player:', players, index=default_ix)
+player = st.selectbox('Select a player:', players, index=default_ix)
 # player='Jason Robertson'
 
 # Gen 1
-def similarity_card(player=player):
+def similarity_card(player=player, poke_gen=poke_gen):
     sim_score = sim_frame.loc[sim_frame['Player']==player,'Sim_Score'].values[0]
     pokemon = sim_frame.loc[sim_frame['Player']==player,'Pokémon'].values[0]
     pokedex_num = sim_frame.loc[sim_frame['Pokémon']==pokemon,'#'].values[0]
@@ -56,11 +70,17 @@ def similarity_card(player=player):
                     'EV Offense':'xEVO_GAR', 
                     'EV Defense':'xEVD_GAR', 
                     'Spec. Teams':'xST_GAR',
-                    'Penalties':'Pens_GAR'}
+                    'Penalties':'Pens_GAR'} if poke_gen=='Gen1' else {'Time On Ice':'TOI_GP',
+                                                                      'EV Offense':'xEVO_GAR', 
+                                                                      'EV Defense':'xEVD_GAR', 
+                                                                      'PP Offense':'xPPO_GAR',
+                                                                      'PK Defense':'xSHD_GAR',
+                                                                      'Penalties':'Pens_GAR'}
 
 
     poke_stats = ['HP','Attack', 'Defense', 
-                  'Special','Speed']
+                  'Special','Speed'] if poke_gen=='Gen1' else ['HP','Attack', 'Defense', 
+                                                               'Sp. Attack','Sp. Defense','Speed']
 
     fig = plt.figure(figsize=(8,10))
 
@@ -89,8 +109,7 @@ def similarity_card(player=player):
 
     ax = plt.subplot(grid[1, :3])
     sns.barplot(x=list(sim_frame.loc[sim_frame['Player']==player,
-                                     ['TOI_GP_scale','xEVO_GAR_scale', 'xEVD_GAR_scale', 
-                                      'xST_GAR_scale','Pens_GAR_scale']].values[0]),
+                                     [x+'_scale' for x in hockey_stats.values()]].values[0]),
                 y=list(hockey_stats.keys()),
                 palette=color_scheme,
                 ax=ax
@@ -115,10 +134,8 @@ def similarity_card(player=player):
 
     ax = plt.subplot(grid[1, 3:])
     sns.barplot(x=list(sim_frame.loc[sim_frame['Player']==player,
-                                    ['HP_scale','Attack_scale','Defense_scale',
-                                     'Special_scale','Speed_scale']].values[0]),
-                y=['HP','Attack', 'Defense', 
-                   'Special','Speed'],
+                                    [x+'_scale' for x in poke_stats]].values[0]),
+                y=poke_stats,
                 palette=color_scheme,
                 ax=ax
                )
@@ -140,7 +157,8 @@ def similarity_card(player=player):
     plt.tick_params(left = False)
 
     ax = plt.subplot(grid[2, 0:])
-    ax.text(0.4,0.5,f"Based on percentile of Evolving-Hockey's xGAR Metrics\n(Spec. Teams = xPPO + xSHD) and percentile of Pokémon's stats",size=12,va='center',ha='center')
+    gen_1_filler = '(Spec. Teams = xPPO + xSHD) ' if poke_gen=='Gen1' else ''
+    ax.text(0.4,0.5,f"Based on percentile of Evolving-Hockey's xGAR Metrics\n{gen_1_filler}and percentile of Pokémon's stats",size=12,va='center',ha='center')
     ax.axis('off')
 
     sns.despine(bottom=True)
