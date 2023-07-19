@@ -95,7 +95,7 @@ def similarity_card(player=player, poke_gen=poke_gen):
     
     title_ax = plt.subplot(grid[0, :3])
     title_ax.text(0.4,0.9,f"{player}'s",size=25,va='center',ha='center')
-    title_ax.text(0.4,0.8,f"Most Similar Pokémon:",size=15,va='center',ha='center')
+    title_ax.text(0.4,0.8,f"Most Similar {poke_gen} Pokémon:",size=15,va='center',ha='center')
     title_ax.text(0.4,0.6,f"{pokemon}",size=50,va='center',ha='center')
     title_ax.text(0.4,0.35,f"Similarity Score:",size=15,va='center',ha='center')
     title_ax.text(0.4,0.2,f"{sim_score:.0f}/100",size=40,va='center',ha='center')
