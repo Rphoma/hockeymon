@@ -45,13 +45,13 @@ color_scheme = ['#FF5959',
                                                     '#FA92B2']
 
 gen_map = {
-    'Gen1':'https://docs.google.com/spreadsheets/d/1pB-ZW1QXPWu8Mdg84WWBanLbl1P95lKWOcQMumhrh0E/export?format=csv&gid=1502323586',
-    'Gen2':'https://docs.google.com/spreadsheets/d/1pB-ZW1QXPWu8Mdg84WWBanLbl1P95lKWOcQMumhrh0E/export?format=csv&gid=562450906'
+    'Gen1':'https://github.com/Blandalytics/hockeymon/blob/main/data/hockey_pokemon_gen1.csv?raw=true',
+    'Gen2':'https://github.com/Blandalytics/hockeymon/blob/main/data/hockey_pokemon_gen2.csv?raw=true'
 }
 
 # @st.cache_data
 def load_data(gen):
-    return pd.read_csv(gen_map[gen])
+    return pd.read_csv(gen_map[gen], encoding='latin1')
 sim_frame = load_data(poke_gen)
 
 # Player
