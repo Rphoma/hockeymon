@@ -49,7 +49,7 @@ gen_map = {
     'Gen2':'https://github.com/Blandalytics/hockeymon/blob/main/data/hockey_pokemon_gen2.csv?raw=true'
 }
 
-# @st.cache_data
+@st.cache_data
 def load_data(gen):
     return pd.read_csv(gen_map[gen], encoding='latin1')
 sim_frame = load_data(poke_gen)
