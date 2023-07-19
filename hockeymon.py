@@ -49,7 +49,7 @@ gen_map = {
     'Gen2':'https://docs.google.com/spreadsheets/d/1pB-ZW1QXPWu8Mdg84WWBanLbl1P95lKWOcQMumhrh0E/export?format=csv&gid=562450906'
 }
 
-@st.cache_data
+# @st.cache_data
 def load_data(gen):
     return pd.read_csv(gen_map[gen])
 sim_frame = load_data(poke_gen)
