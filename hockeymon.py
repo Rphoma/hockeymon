@@ -6,6 +6,7 @@ import urllib
 from PIL import Image
 import seaborn as sns
 import scipy
+import time
 
 st.write("You may need to reload your player a few times, but I promise the right Pokémon image and stats will show up!")
 
@@ -161,6 +162,7 @@ def similarity_card(player=player, poke_gen=poke_gen):
     disclaimer_ax.axis('off')
     
     sns.despine(bottom=True)
+    time.sleep(1)
     return fig
     # st.pyplot(fig)
 
