@@ -127,7 +127,7 @@ def similarity_card(player=player, poke_gen=poke_gen):
                 size=16,
                 fontweight='bold')
 
-    ax.set(xlim=(0,1.1))
+    ax.set(xlim=(0,1.2))
     ax.get_xaxis().set_visible(False)
     plt.yticks(fontsize=12)
     plt.tick_params(left = False)
