@@ -7,9 +7,6 @@ from PIL import Image
 import seaborn as sns
 import scipy
 
-def min_max_scaler(x):
-    return (x-x.min())/(x.max()-x.min())
-
 pl_white = '#FEFEFE'
 pl_background = '#162B50'
 pl_text = '#72a3f7'
@@ -36,35 +33,22 @@ color_scheme = ['#FF5959',
                '#FAE078',
                 '#8EC7BC',
                '#FA92B2']
+@st.cache_data
+def load_data():
+    return pd.read_csv('https://docs.google.com/spreadsheets/d/1pB-ZW1QXPWu8Mdg84WWBanLbl1P95lKWOcQMumhrh0E/export?format=csv&gid=1502323586')
+sim_frame = load_data()
 
-hockey_df = pd.read_csv('https://docs.google.com/spreadsheets/d/1pB-ZW1QXPWu8Mdg84WWBanLbl1P95lKWOcQMumhrh0E/export?format=csv&gid=0')
-hockey_df['TOI_GP'] = hockey_df['TOI_All'].div(hockey_df['GP'])
-hockey_df['xST_GAR'] = hockey_df['xPPO_GAR'].add(hockey_df['xSHD_GAR'])
-for stat in ['TOI_GP','xEVO_GAR', 'xEVD_GAR', 'xPPO_GAR', 'xSHD_GAR','xST_GAR','Pens_GAR']:
-    hockey_df[stat+'_scale'] = hockey_df[stat].rank(pct=True)
-    
 # Player
-players = list(hockey_df['Player'].unique())
+players = list(sim_frame['Player'].unique())
 default_ix = players.index('Jason Robertson')
-player = st.selectbox('Select a player:', players, index=default_ix)
-
-gen_1_df = pd.read_csv('https://docs.google.com/spreadsheets/d/1pB-ZW1QXPWu8Mdg84WWBanLbl1P95lKWOcQMumhrh0E/export?format=csv&gid=2391719')
-for stat in ['HP','Attack','Defense','Speed','Special']:
-    gen_1_df[stat+'_scale'] = gen_1_df[stat].rank(pct=True)
-    
-poke_list = list(gen_1_df['Pokémon'].unique())
-
-sim_frame = pd.read_csv('https://docs.google.com/spreadsheets/d/1pB-ZW1QXPWu8Mdg84WWBanLbl1P95lKWOcQMumhrh0E/export?format=csv&gid=1709362502')
-
-all_vals = sim_frame[poke_list].to_numpy().flatten()
-global_min = all_vals.min()
-global_max = all_vals.max()
+player = st.selectbox('Selct a player:', players, index=default_ix)
+# player='Jason Robertson'
 
 # Gen 1
 def similarity_card(player=player):
     sim_score = sim_frame.loc[sim_frame['Player']==player,'Sim_Score'].values[0]
     pokemon = sim_frame.loc[sim_frame['Player']==player,'Pokémon'].values[0]
-    pokedex_num = gen_1_df.loc[gen_1_df['Pokémon']==pokemon,'#'].values[0]
+    pokedex_num = sim_frame.loc[sim_frame['Pokémon']==pokemon,'#'].values[0]
 
     hockey_stats = {'Time On Ice':'TOI_GP',
                     'EV Offense':'xEVO_GAR', 
@@ -102,7 +86,7 @@ def similarity_card(player=player):
     ax.axis('off')
 
     ax = plt.subplot(grid[1, :3])
-    sns.barplot(x=list(hockey_df.loc[hockey_df['Player']==player,
+    sns.barplot(x=list(sim_frame.loc[sim_frame['Player']==player,
                                      ['TOI_GP_scale','xEVO_GAR_scale', 'xEVD_GAR_scale', 
                                       'xST_GAR_scale','Pens_GAR_scale']].values[0]),
                 y=list(hockey_stats.keys()),
@@ -110,8 +94,8 @@ def similarity_card(player=player):
                 ax=ax
                )
     for chart_stat in hockey_stats.keys():
-        chart_val = hockey_df.loc[hockey_df['Player']==player,hockey_stats[chart_stat]+'_scale'].values[0]
-        text_val = hockey_df.loc[hockey_df['Player']==player,hockey_stats[chart_stat]].values[0]
+        chart_val = sim_frame.loc[sim_frame['Player']==player,hockey_stats[chart_stat]+'_scale'].values[0]
+        text_val = sim_frame.loc[sim_frame['Player']==player,hockey_stats[chart_stat]].values[0]
         ax.text(chart_val-0.05 if chart_val>=0.3 else chart_val+0.05,
                 list(hockey_stats.keys()).index(chart_stat),
                 f'{text_val:.1f}',
@@ -128,7 +112,7 @@ def similarity_card(player=player):
     plt.tick_params(left = False)
 
     ax = plt.subplot(grid[1, 3:])
-    sns.barplot(x=list(gen_1_df.loc[gen_1_df['Pokémon']==pokemon,
+    sns.barplot(x=list(sim_frame.loc[sim_frame['Player']==player,
                                     ['HP_scale','Attack_scale','Defense_scale',
                                      'Special_scale','Speed_scale']].values[0]),
                 y=['HP','Attack', 'Defense', 
@@ -137,8 +121,8 @@ def similarity_card(player=player):
                 ax=ax
                )
     for chart_stat in poke_stats:
-        chart_val = gen_1_df.loc[gen_1_df['Pokémon']==pokemon,chart_stat+'_scale'].values[0]
-        text_val = gen_1_df.loc[gen_1_df['Pokémon']==pokemon,chart_stat].values[0]
+        chart_val = sim_frame.loc[sim_frame['Player']==player,chart_stat+'_scale'].values[0]
+        text_val = sim_frame.loc[sim_frame['Player']==player,chart_stat].values[0]
         ax.text(chart_val-0.05 if chart_val>=0.3 else chart_val+0.05,
                 poke_stats.index(chart_stat),
                 f'{text_val:.0f}',
@@ -161,4 +145,3 @@ def similarity_card(player=player):
     st.pyplot(fig)
 
 similarity_card()
-st.write("Make sure to subscribe to [Evolving-Hockey](https://evolving-hockey.com/) and follow me [@Blandalytics](https://twitter.com/blandalytics)!")
