@@ -154,10 +154,11 @@ def similarity_card(player=player):
     plt.tick_params(left = False)
 
     ax = plt.subplot(grid[2, 0:])
-    ax.text(0.4,0.5,f"Based on percentile of EvolvingWild's xGAR Metrics (Special Teams = xPPO + XSHD)\nand percentile of Pokémon's stats",size=12,va='center',ha='center')
+    ax.text(0.4,0.5,f"Based on percentile of Evolving-Hockey's xGAR Metrics\n(Special Teams = xPPO + XSHD) and percentile of Pokémon's stats",size=12,va='center',ha='center')
     ax.axis('off')
 
     sns.despine(bottom=True)
     st.pyplot(fig)
 
 similarity_card()
+st.write("Make sure to subscribe to [Evolving-Hockey](https://evolving-hockey.com/) and follow me [@Blandalytics](https://twitter.com/blandalytics)!")
