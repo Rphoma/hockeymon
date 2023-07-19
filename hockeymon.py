@@ -1,4 +1,4 @@
-# import streamlit as st
+import streamlit as st
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
@@ -46,7 +46,7 @@ for stat in ['TOI_GP','xEVO_GAR', 'xEVD_GAR', 'xPPO_GAR', 'xSHD_GAR','xST_GAR','
 # Player
 players = list(hockey_df['Player'].unique())
 default_ix = players.index('Jason Robertson')
-player = st.selectbox('Selct a player:', players, index=default_ix)
+player = st.selectbox('Select a player:', players, index=default_ix)
 
 gen_1_df = pd.read_csv('https://docs.google.com/spreadsheets/d/1pB-ZW1QXPWu8Mdg84WWBanLbl1P95lKWOcQMumhrh0E/export?format=csv&gid=2391719')
 for stat in ['HP','Attack','Defense','Speed','Special']:
