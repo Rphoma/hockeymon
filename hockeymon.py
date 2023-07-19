@@ -161,7 +161,8 @@ def similarity_card(player=player, poke_gen=poke_gen):
     disclaimer_ax.axis('off')
     
     sns.despine(bottom=True)
-    st.pyplot(fig)
+    return fig
+    # st.pyplot(fig)
 
-similarity_card()
+st.pyplot(similarity_card())
 st.write("Make sure to subscribe to [Evolving-Hockey](https://evolving-hockey.com/) and follow me [@Blandalytics](https://twitter.com/blandalytics)!")
