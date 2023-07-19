@@ -8,7 +8,7 @@ import seaborn as sns
 import scipy
 import time
 
-st.write("You may need to reload your player a few times, but I promise the right Pokémon image and stats will show up!")
+st.write("If you get errors or incomplete/incorrect cards, just re-enter your player a few times.\nI promise the right Pokémon image and stats will eventually show up! 😂")
 
 generations = ['Gen1','Gen2']
 poke_gen = st.radio('Choose a generation of Pokémon:', generations)
