@@ -61,7 +61,6 @@ global_min = all_vals.min()
 global_max = all_vals.max()
 
 # Gen 1
-player = 'Dmitry Orlov'
 def similarity_card(player=player):
     sim_score = sim_frame.loc[sim_frame['Player']==player,'Sim_Score'].values[0]
     pokemon = sim_frame.loc[sim_frame['Player']==player,'Pokémon'].values[0]
