@@ -7,6 +7,8 @@ from PIL import Image
 import seaborn as sns
 import scipy
 
+st.write("You may need to reload your player once or twice, but I promise the right Pokémon and stats will show up!")
+
 pl_white = '#FEFEFE'
 pl_background = '#162B50'
 pl_text = '#72a3f7'
@@ -145,3 +147,4 @@ def similarity_card(player=player):
     st.pyplot(fig)
 
 similarity_card()
+st.write("Make sure to subscribe to [Evolving-Hockey](https://evolving-hockey.com/) and follow me [@Blandalytics](https://twitter.com/blandalytics)!")
