@@ -125,6 +125,7 @@ def similarity_card(player=player):
     ax.set(xlim=(0,1.1))
     ax.get_xaxis().set_visible(False)
     plt.yticks(fontsize=12)
+    plt.tick_params(left = False)
 
     ax = plt.subplot(grid[1, 3:])
     sns.barplot(x=list(gen_1_df.loc[gen_1_df['Pokémon']==pokemon,
@@ -150,6 +151,7 @@ def similarity_card(player=player):
     ax.set(xlim=(0,1.1))
     ax.get_xaxis().set_visible(False)
     plt.yticks(fontsize=12)
+    plt.tick_params(left = False)
 
     ax = plt.subplot(grid[2, 0:])
     ax.text(0.4,0.5,f"Based on percentile of EvolvingWild's xGAR Metrics\nand percentile of Pokémon's stats",size=12,va='center',ha='center')
