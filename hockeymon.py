@@ -8,7 +8,8 @@ from PIL import Image
 # import scipy
 # import time
 
-st.write("If you get errors or incomplete/incorrect cards, just re-enter your player a few times.\nI promise the right Pokémon image and stats will eventually show up! 😂")
+logo = Image.open(urllib.request.urlopen('https://github.com/Blandalytics/hockeymon/blob/main/hockeymon%20logo.png?raw=true'))
+st.image(logo)
 
 generations = ['Gen1','Gen2']
 poke_gen = st.radio('Choose a generation of Pokémon:', generations)
