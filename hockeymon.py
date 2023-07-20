@@ -9,7 +9,7 @@ from PIL import Image
 # import time
 
 logo = Image.open(urllib.request.urlopen('https://github.com/Blandalytics/hockeymon/blob/main/hockeymon%20logo.png?raw=true'))
-col1, col2, col3 = st.columns(3)
+col1, col2, col3 = st.columns([0.1,0.8,0.1])
 with col1:
     st.write(' ')
 
