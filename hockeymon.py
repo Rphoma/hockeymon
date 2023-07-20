@@ -165,6 +165,11 @@ def similarity_card(player=player, poke_gen=poke_gen):
     time.sleep(1)
     return fig
     # st.pyplot(fig)
+if poke_gen=='Gen1':
+    st.pyplot(similarity_card())
+else:
+    card_loc = f"https://github.com/Blandalytics/hockeymon/blob/main/hockeymon_cards/{player.replace(' ','%20')}-{poke_gen}.png?raw=true"
+    hockeymon_card = Image.open(urllib.request.urlopen(card_loc))
+    st.image(hockeymon_card)
 
-st.pyplot(similarity_card())
 st.write("Make sure to subscribe to [Evolving-Hockey](https://evolving-hockey.com/) and follow me [@Blandalytics](https://twitter.com/blandalytics)!")
