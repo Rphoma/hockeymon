@@ -9,7 +9,15 @@ from PIL import Image
 # import time
 
 logo = Image.open(urllib.request.urlopen('https://github.com/Blandalytics/hockeymon/blob/main/hockeymon%20logo.png?raw=true'))
-st.image(logo)
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.write(' ')
+
+with col2:
+    st.image(logo)
+
+with col3:
+    st.write(' ')
 
 generations = ['Gen1','Gen2']
 poke_gen = st.radio('Choose a generation of Pokémon:', generations)
