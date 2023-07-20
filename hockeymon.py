@@ -57,7 +57,7 @@ poke_gen = st.radio('Choose a generation of Pokémon:', generations)
 
 @st.cache_data
 def load_players():
-    return list(pd.read_csv('https://github.com/Blandalytics/hockeymon/blob/main/data/hockey_pokemon_gen1.csv?raw=true', encoding='latin1')['Player'].unique()
+    return list(pd.read_csv('https://github.com/Blandalytics/hockeymon/blob/main/data/hockey_pokemon_gen1.csv?raw=true', encoding='latin1')['Player'].unique())
 players = load_players()
 
 # Player
