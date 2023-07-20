@@ -172,4 +172,4 @@ else:
     hockeymon_card = Image.open(urllib.request.urlopen(card_loc))
     st.image(hockeymon_card)
 
-st.write("Make sure to subscribe to [Evolving-Hockey](https://evolving-hockey.com/) and follow me [@Blandalytics](https://twitter.com/blandalytics)!")
+st.write("Make sure to subscribe to [Evolving-Hockey](https://evolving-hockey.com/) and follow me [@Blandalytics](https://twitter.com/blandalytics)!\n\nIf you REALLY like this, [Buy me a Coffee!](https://bmc.link/blandalytics)")
