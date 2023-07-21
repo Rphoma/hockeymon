@@ -19,7 +19,7 @@ with col2:
 with col3:
     st.write(' ')
 
-generations = ['Gen1','Gen2']
+generations = ['Gen1','Gen2','Gen3']
 poke_gen = st.radio('Choose a generation of Pokémon:', generations)
 
 # pl_white = '#FEFEFE'
@@ -182,7 +182,10 @@ player = st.selectbox('Select a player:', players, index=default_ix)
 # if poke_gen=='Gen1':
 #     st.pyplot(similarity_card())
 # else:
-card_loc = f"https://github.com/Blandalytics/hockeymon/blob/main/hockeymon_cards/{player.replace(' ','%20')}-{poke_gen}.png?raw=true"
+if poke_gen != 'Gen3':
+    card_loc = f"https://github.com/Blandalytics/hockeymon/blob/main/hockeymon_cards/{player.replace(' ','%20')}-{poke_gen}.png?raw=true"
+else:
+    card_loc = f"https://github.com/Blandalytics/hockeymon/blob/main/hockeymon_cards/{poke_gen}/{player.replace(' ','%20')}-{poke_gen}.png?raw=true"
 hockeymon_card = Image.open(urllib.request.urlopen(card_loc))
 st.image(hockeymon_card)
 
